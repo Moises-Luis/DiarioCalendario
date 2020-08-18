@@ -12,14 +12,16 @@ import javax.swing.*;
 
 public class VentanaPrincipal extends JFrame {
     
+    ListaTablero mesesLista = new ListaTablero();
     private JPanel panelPrincipal,panelNorth, panelCenter;
     private JLabel hora;
+    private String nomMes;
     
     public VentanaPrincipal(){
         this.setBounds(0,0,500,500);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         panelPrincipal = new JPanel();
         panelPrincipal.setBackground(Color.BLACK);
@@ -32,7 +34,7 @@ public class VentanaPrincipal extends JFrame {
         panelPrincipal.add(panelNorth, BorderLayout.NORTH);
         
         panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(7,7));
+        panelCenter.setLayout(new GridLayout(1,1));
         panelCenter.setBackground(Color.BLUE);
         panelPrincipal.add(panelCenter, BorderLayout.CENTER);
         
@@ -43,42 +45,53 @@ public class VentanaPrincipal extends JFrame {
         hora.setBackground(Color.GREEN);
         panelNorth.add(hora);
         
-        for(int i= 0; i<7; i++){
-            for(int j = 0; j<7; j++){
-                Casilla casilla = new Casilla();
-                panelCenter.add(casilla);
-                
-                if(i == 0){
-                    casilla.setBackground(Color.ORANGE);
-                    switch(j){
-                        case 0: casilla.setText("D");
-                            break;
-                        case 1: casilla.setText("L");
-                            break;
-                        case 2: casilla.setText("M");
-                            break;
-                        case 3: casilla.setText("M");
-                            break;
-                        case 4: casilla.setText("J");
-                            break;
-                        case 5: casilla.setText("V");
-                            break;
-                        case 6: casilla.setText("S");
-                            break;  
-                    }
-                }
-            }
-        }
+        crearMeses();
+        panelCenter.add(mostrarTableroActual());
+        this.setTitle(nomMes);
+        colocarDiaAlBoton();
         
     }
     
     public void colocarDiaAlBoton(){
+        mostrarTableroActual().setDia(0, 0, 1);
+        for(int i = 0; i<12; i++){
+            for(int j = 0; j<31; j++){
+                
+            }
+        }
+    }
+    
+    public void crearMeses(){
+        
+        for(int i = 0; i<12; i++){
+            Tablero nuevo = new Tablero();
+            if(i == 0 || i == 2 || i == 4 || i== 6 || i == 7 || i == 9 || i == 11){
+                nuevo.setDias(31);
+            }else if(i == 1){
+                nuevo.setDias(29);
+            }else{
+                nuevo.setDias(30);
+            }
+            mesesLista.agregar(nuevo);
+        }
+    }
+    
+    public Tablero mostrarTableroActual(){
         Calendar calendario = new GregorianCalendar();
+        int mes = calendario.get(Calendar.MONDAY);
+        Tablero buscado = mesesLista.getTablero(mes);
+        nomMes = String.valueOf(mes);
+        return buscado;
+    }
+}
+
+/**
+ * Calendar calendario = new GregorianCalendar();
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         int diaOf = calendario.get(Calendar.DAY_OF_WEEK_IN_MONTH);
         int dia3 = calendario.get(Calendar.DAY_OF_YEAR);
         int dia4 = calendario.get(Calendar.DAY_OF_WEEK);
-        int dia5 = calendario.get(Calendar.MONDAY);
+        
         int dia6 = calendario.get(Calendar.WEEK_OF_MONTH);
         int dia7 = calendario.get(Calendar.DATE);
         
@@ -86,13 +99,9 @@ public class VentanaPrincipal extends JFrame {
         System.out.println("dia de la semana: "+diaOf);
         System.out.println("dia3: "+dia3);
         System.out.println("dia4: "+dia4);
-        System.out.println("mes: "+dia5);
         System.out.println("semanas del mes: "+dia6);
         System.out.println("semanas del mes: "+dia7);
         LocalDate fecha = LocalDate.now();
         
         System.out.println("fecha: "+fecha);
-        
-        
-    }
-}
+ */

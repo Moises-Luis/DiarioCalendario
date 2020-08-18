@@ -6,41 +6,26 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 public class Tablero extends JPanel{
-    
+    private Casilla arreglo[][];
     private Tablero siguiente;
     private Tablero anterior;
     private int mes;
+    private int dias;
     
     public Tablero(){
         siguiente = null;
         anterior = null;
         mes = 0;
         this.setLayout(new GridLayout(7,7));
+        arreglo = new Casilla[7][7];
+        
         
         for(int i= 0; i<7; i++){
             for(int j = 0; j<7; j++){
                 Casilla casilla = new Casilla();
-                this.add(casilla);
+                arreglo[i][j] = casilla;
+                this.add(arreglo[i][j]);
                 
-                if(i == 0){
-                    casilla.setBackground(Color.ORANGE);
-                    switch(j){
-                        case 0: casilla.setText("D");
-                            break;
-                        case 1: casilla.setText("L");
-                            break;
-                        case 2: casilla.setText("M");
-                            break;
-                        case 3: casilla.setText("M");
-                            break;
-                        case 4: casilla.setText("J");
-                            break;
-                        case 5: casilla.setText("V");
-                            break;
-                        case 6: casilla.setText("S");
-                            break;  
-                    }
-                }
             }
         }
         
@@ -69,6 +54,24 @@ public class Tablero extends JPanel{
     public void setMes(int mes) {
         this.mes = mes;
     }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
+    }
+
+    public JButton[][] getArreglo() {
+        return arreglo;
+    }
+
+    public void setArreglo(Casilla[][] arreglo) {
+        this.arreglo = arreglo;
+    }
     
-    
+    public void setDia(int filIni, int columIni, int dia){
+        arreglo[filIni][columIni].setDia(dia);
+    }
 }

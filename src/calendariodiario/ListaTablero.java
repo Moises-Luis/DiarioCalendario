@@ -48,7 +48,7 @@ public class ListaTablero {
         nuevoTablero.setMes(tamaño);
     }
     public Tablero getTablero(int mes){
-        Tablero aux = new Tablero();
+        Tablero aux = inicio;
         for(int i = 0; i<12; i++){
             if(aux.getMes() == mes){    
                 break;
