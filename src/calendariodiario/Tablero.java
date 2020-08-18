@@ -63,7 +63,7 @@ public class Tablero extends JPanel{
         this.dias = dias;
     }
 
-    public JButton[][] getArreglo() {
+    public Casilla[][] getArreglo() {
         return arreglo;
     }
 
@@ -74,4 +74,6 @@ public class Tablero extends JPanel{
     public void setDia(int filIni, int columIni, int dia){
         arreglo[filIni][columIni].setDia(dia);
     }
+    
+    
 }

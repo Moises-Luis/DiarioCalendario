@@ -53,10 +53,18 @@ public class VentanaPrincipal extends JFrame {
     }
     
     public void colocarDiaAlBoton(){
-        mostrarTableroActual().setDia(0, 0, 1);
-        for(int i = 0; i<12; i++){
-            for(int j = 0; j<31; j++){
-                
+        int numDia = 1;
+        Tablero tableroInicio = mesesLista.getInicio();
+        if(tableroInicio == mesesLista.getInicio()){
+            for(int i = 1; i<7; i++){
+                for(int j = 3; j<7; j++){
+                    if(numDia <=31){
+                        tableroInicio.setDia(i, j, numDia);
+                    }else{
+                        break;
+                    }
+                    numDia++;
+                }
             }
         }
     }
