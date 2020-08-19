@@ -57,4 +57,10 @@ public class ListaTablero {
         }
         return aux;
     }
+    public Tablero getSiguiente(Tablero actual){
+        return actual.getSiguiente();
+    }
+    public Tablero getAnterior(Tablero actual){
+        return actual.getAnterior();
+    }
 }
