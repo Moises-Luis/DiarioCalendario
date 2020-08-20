@@ -2,6 +2,7 @@
 package calendariodiario;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -12,20 +13,68 @@ public class Tablero extends JPanel{
     private int mes;
     private int dias;
     
+    
     public Tablero(){
+        
+        this.setOpaque(false);
         siguiente = null;
         anterior = null;
         mes = 0;
         this.setLayout(new GridLayout(7,7));
+      //  this.setBackground(new Color(0,0,0,180));
         arreglo = new Casilla[7][7];
+        
         
         
         for(int i= 0; i<7; i++){
             for(int j = 0; j<7; j++){
                 Casilla casilla = new Casilla();
                 arreglo[i][j] = casilla;
+                //arreglo[i][j].setOpaque(false);
                 this.add(arreglo[i][j]);
-                
+                if(i == 0){
+                    
+                    casilla.setBackground(Color.ORANGE);
+                    switch(j){
+                        case 0: casilla.setText("D");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.RED);
+                        setForeground(Color.red);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+                            break;
+                        case 1: casilla.setText("L");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.BLACK);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+                            break;
+                        case 2: casilla.setText("M");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.BLACK);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+                            break;
+                        case 3: casilla.setText("M");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.BLACK);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+                            break;
+                        case 4: casilla.setText("J");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.BLACK);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+                            break;
+                        case 5: casilla.setText("V");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.BLACK);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+                            break;
+                        case 6: casilla.setText("S");
+                        arreglo[i][j].setFont(new Font("MathJax_Typewriter",Font.BOLD,25));
+                        arreglo[i][j].setForeground(Color.RED);
+                        arreglo[i][j].setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+                            break;  
+                    }
+                }
             }
         }
         

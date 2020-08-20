@@ -15,23 +15,28 @@ import javax.swing.*;
 public class VentanaPrincipal extends JFrame implements ActionListener{
     
     ListaTablero mesesLista = new ListaTablero();
-    private JPanel panelPrincipal,panelNorth, panelCenter;
+    private JPanel panelPrincipal,panelNorth, panelCenter, panelCentral2;
     private JLabel hora;
     private String nomMes;
     private Tablero nuevo;
     private Casilla arreglo[][];
     private int posColumnFinal;
     private JButton mesAnterior, mesSiguiente;
+    private JLabel fondo;
     
     public VentanaPrincipal(){
-        this.setBounds(0,0,500,500);
+        this.setBounds(0,0,700,700);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
+        
+        
+        
         panelPrincipal = new JPanel();
-        panelPrincipal.setBackground(Color.BLACK);
+        //panelPrincipal.setBackground(Color.BLACK);
         panelPrincipal.setLayout(new BorderLayout(10,10));
+        panelPrincipal.setOpaque(false);
         this.getContentPane().add(panelPrincipal);
         
         
@@ -39,9 +44,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
         panelNorth.setBackground(Color.red);
         panelPrincipal.add(panelNorth, BorderLayout.NORTH);
         
+  
+        
         panelCenter = new JPanel();
         panelCenter.setLayout(new GridLayout(1,1));
-        panelCenter.setBackground(Color.BLUE);
+        panelCenter.setOpaque(false);
+        //panelCenter.setBackground(Color.BLUE);
         panelPrincipal.add(panelCenter, BorderLayout.CENTER);
         
         
@@ -62,11 +70,19 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
         mesSiguiente.addActionListener(this);
         panelNorth.add(mesSiguiente);
         
+        
+        
         crearMeses();
         panelCenter.add(mostrarTableroFechaActual());
+        
         this.setTitle(nomMes);
         colocarDiaAlBoton();
+        pintarDiaActual();
         
+        fondo = new JLabel(new ImageIcon("src/imagen.jpg"));
+        this.add(fondo);
+        this.panelPrincipal.updateUI();
+   
     }
     
     public void colocarDiaAlBoton(){
@@ -115,7 +131,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
             while(aux != tableroInicio){
                 numDia = 1;
                 arreglo = aux.getArreglo();
-                if (aux.getDias() == 0 || aux.getDias() == 2 || aux.getDias() == 4 || aux.getDias() == 6 || aux.getDias() == 7 || aux.getDias() == 9 || aux.getDias() == 11) {
+                if (aux.getMes()== 1 || aux.getMes() == 3 || aux.getMes() == 5 || aux.getMes() == 7 || aux.getMes() == 8 || aux.getMes() == 10 || aux.getMes() == 12) {
                     
                     for (int i = 1; i < 7; i++) {
                         if (posColumnFinal < 6) {
@@ -158,7 +174,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
                     }
                     
-                } else if (aux.getDias() == 1) {
+                } else if (aux.getMes() == 2) {
                     for (int i = 1; i < 7; i++) {
                         if (posColumnFinal < 6) {
                             
@@ -191,7 +207,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
                                 if (numDia <= 29) {
                                     arreglo[i][j].setDia(numDia);
 
-                                    if (numDia == 30) {
+                                    if (numDia == 29) {
                                         posColumnFinal = j;
                                     }
                                 }
@@ -256,14 +272,17 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
     
     public void crearMeses(){
         
-        for(int i = 0; i<12; i++){
+        for(int i = 1; i<13; i++){
             nuevo = new Tablero();
-            if(i == 0 || i == 2 || i == 4 || i== 6 || i == 7 || i == 9 || i == 11){
+            if(i == 1 || i == 3 || i == 5 || i== 7 || i == 8 || i == 10 || i == 12){
                 nuevo.setDias(31);
-            }else if(i == 1){
+               // nuevo.setMes(i);
+            }else if(i == 2){
                 nuevo.setDias(29);
+                //nuevo.setMes(i);
             }else{
                 nuevo.setDias(30);
+                //nuevo.setMes(i);
             }
             mesesLista.agregar(nuevo);
         }
@@ -271,9 +290,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
     
     public Tablero mostrarTableroFechaActual(){
         Calendar calendario = new GregorianCalendar();
-        int mes = calendario.get(Calendar.MONDAY);
+        int mes = 1;
+        mes +=calendario.get(Calendar.MONDAY);
+        System.out.println("mes: "+mes);
         Tablero buscado = mesesLista.getTablero(mes);
         nomMes = String.valueOf(mes);
+        
         return buscado;
     }
     
@@ -286,7 +308,36 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
         return buscado;
     }
     
-    @Override
+   
+    
+    public void pintarDiaActual(){
+        Calendar calendario = new GregorianCalendar();
+        int diaActual = calendario.get(Calendar.DAY_OF_MONTH);
+       
+        int mesTableroActual = Integer.parseInt(this.getTitle());
+        Tablero tableroMesActual = mesesLista.getTablero(mesTableroActual);
+        nomMes = String.valueOf(tableroMesActual.getMes()); 
+        Casilla arregloAux[][] = tableroMesActual.getArreglo();
+        
+        for(int i = 1; i<7; i++){
+            for(int j = 0; j<7; j++){
+                
+                if(arregloAux[i][j].getText() != null && arregloAux[i][j].getText() != ""){
+                    if(Integer.parseInt(arregloAux[i][j].getText()) == diaActual){
+                        arregloAux[i][j].setForeground(Color.WHITE);
+                        arregloAux[i][j].setFont(new Font("MathJax_Typewriter",2,20));
+                        
+                        arregloAux[i][j].setBackground(new Color(0,70,150,150));
+                
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+    
+     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == mesAnterior){
             Tablero mesCambiado = mesesLista.getAnterior(mostrarTableroActual());
